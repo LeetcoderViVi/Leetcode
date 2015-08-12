@@ -1,0 +1,49 @@
+//非常简单，就是先用动态规划判断是否可以，再用DFS、递归来确定有哪些！！！
+//直接用递归，有可能会因为不能Break而超时！
+class Solution {
+public:
+    vector<string> wordBreak(string s, unordered_set<string>& wordDict) {
+        vector<string> res;
+        if(canBreakfunc(s,wordDict)==false)
+            return res;
+        wordBreakResult(s,wordDict,0,"",res);
+        return res;
+    }
+    
+    void wordBreakResult(string s, unordered_set<string>& wordDict, int start, string preWords, vector<string>& res)
+    {
+        if(start==s.size())
+        {
+            res.push_back(preWords);
+            return;
+        }
+        if(start!=0)
+            preWords += " ";
+            
+        string word = "";
+        for(int j = start;j<s.size();j++)
+        {
+            word = s.substr(start,j-start+1);
+            if(wordDict.find(word) != wordDict.end())
+            {
+                wordBreakResult(s,wordDict,j+1,preWords + word,res);
+            }
+        }
+    }
+    
+    bool canBreakfunc(string s, unordered_set<string> &dict) {
+        int N = s.size();
+        vector<bool> canBreak(N+1,false);
+        canBreak[0] = true;
+        
+        for (int i = 1; i <= N; ++i) {
+            for (int j = i-1; j >= 0; --j) {
+                if (canBreak[j] && dict.find(s.substr(j, i-j)) != dict.end()) {
+                    canBreak[i] = true;
+                    break;
+                }
+            }
+        }
+        return canBreak[N];
+    }
+};
