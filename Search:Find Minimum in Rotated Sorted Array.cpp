@@ -1,6 +1,20 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
+        for(int i=1;i<nums.size();i++){
+            if(nums[i]<nums[i-1]){
+                return nums[i];
+            }
+        }
+        return nums[0];
+    }
+};
+
+
+
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
         int start = 0;
         int end = nums.size()-1;
         int mid;
