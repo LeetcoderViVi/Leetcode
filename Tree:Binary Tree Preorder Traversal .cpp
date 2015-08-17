@@ -18,4 +18,31 @@ public:
     }
 };
 
-//
+//non-traverse
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        //valid
+        vector<int> result;
+        if(root == NULL){
+            return result;
+        }
+        
+        //non-traverse
+        stack<TreeNode*> stackTree;
+        stackTree.push(root);
+        while(stackTree.empty() == false){
+            TreeNode *cur = stackTree.top();
+            stackTree.pop();
+            result.push_back(cur->val);
+            if(cur->right){
+                stackTree.push(cur->right);
+            }
+            if(cur->left){
+                stackTree.push(cur->left);
+            }
+        }
+        
+        return result;
+    }
+};
